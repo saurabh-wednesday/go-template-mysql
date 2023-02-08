@@ -21,24 +21,24 @@ var (
 	_ = queries.Equal
 )
 
-func testGorpMigrations(t *testing.T) {
+func testPosts(t *testing.T) {
 	t.Parallel()
 
-	query := GorpMigrations()
+	query := Posts()
 
 	if query.Query == nil {
 		t.Error("expected a query, got nothing")
 	}
 }
 
-func testGorpMigrationsDelete(t *testing.T) {
+func testPostsDelete(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -54,7 +54,7 @@ func testGorpMigrationsDelete(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -64,14 +64,14 @@ func testGorpMigrationsDelete(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsQueryDeleteAll(t *testing.T) {
+func testPostsQueryDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -81,13 +81,13 @@ func testGorpMigrationsQueryDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	if rowsAff, err := GorpMigrations().DeleteAll(ctx, tx); err != nil {
+	if rowsAff, err := Posts().DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,14 +97,14 @@ func testGorpMigrationsQueryDeleteAll(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsSliceDeleteAll(t *testing.T) {
+func testPostsSliceDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -114,7 +114,7 @@ func testGorpMigrationsSliceDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := GorpMigrationSlice{o}
+	slice := PostSlice{o}
 
 	if rowsAff, err := slice.DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
@@ -122,7 +122,7 @@ func testGorpMigrationsSliceDeleteAll(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -132,14 +132,14 @@ func testGorpMigrationsSliceDeleteAll(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsExists(t *testing.T) {
+func testPostsExists(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -149,23 +149,23 @@ func testGorpMigrationsExists(t *testing.T) {
 		t.Error(err)
 	}
 
-	e, err := GorpMigrationExists(ctx, tx, o.ID)
+	e, err := PostExists(ctx, tx, o.ID)
 	if err != nil {
-		t.Errorf("Unable to check if GorpMigration exists: %s", err)
+		t.Errorf("Unable to check if Post exists: %s", err)
 	}
 	if !e {
-		t.Errorf("Expected GorpMigrationExists to return true, but got false.")
+		t.Errorf("Expected PostExists to return true, but got false.")
 	}
 }
 
-func testGorpMigrationsFind(t *testing.T) {
+func testPostsFind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -175,24 +175,24 @@ func testGorpMigrationsFind(t *testing.T) {
 		t.Error(err)
 	}
 
-	gorpMigrationFound, err := FindGorpMigration(ctx, tx, o.ID)
+	postFound, err := FindPost(ctx, tx, o.ID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if gorpMigrationFound == nil {
+	if postFound == nil {
 		t.Error("want a record, got nil")
 	}
 }
 
-func testGorpMigrationsBind(t *testing.T) {
+func testPostsBind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -202,19 +202,19 @@ func testGorpMigrationsBind(t *testing.T) {
 		t.Error(err)
 	}
 
-	if err = GorpMigrations().Bind(ctx, tx, o); err != nil {
+	if err = Posts().Bind(ctx, tx, o); err != nil {
 		t.Error(err)
 	}
 }
 
-func testGorpMigrationsOne(t *testing.T) {
+func testPostsOne(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -224,38 +224,38 @@ func testGorpMigrationsOne(t *testing.T) {
 		t.Error(err)
 	}
 
-	if x, err := GorpMigrations().One(ctx, tx); err != nil {
+	if x, err := Posts().One(ctx, tx); err != nil {
 		t.Error(err)
 	} else if x == nil {
 		t.Error("expected to get a non nil record")
 	}
 }
 
-func testGorpMigrationsAll(t *testing.T) {
+func testPostsAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	gorpMigrationOne := &GorpMigration{}
-	gorpMigrationTwo := &GorpMigration{}
-	if err = randomize.Struct(seed, gorpMigrationOne, gorpMigrationDBTypes, false, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	postOne := &Post{}
+	postTwo := &Post{}
+	if err = randomize.Struct(seed, postOne, postDBTypes, false, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
-	if err = randomize.Struct(seed, gorpMigrationTwo, gorpMigrationDBTypes, false, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	if err = randomize.Struct(seed, postTwo, postDBTypes, false, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = gorpMigrationOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = postOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = gorpMigrationTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = postTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	slice, err := GorpMigrations().All(ctx, tx)
+	slice, err := Posts().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -265,31 +265,31 @@ func testGorpMigrationsAll(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsCount(t *testing.T) {
+func testPostsCount(t *testing.T) {
 	t.Parallel()
 
 	var err error
 	seed := randomize.NewSeed()
-	gorpMigrationOne := &GorpMigration{}
-	gorpMigrationTwo := &GorpMigration{}
-	if err = randomize.Struct(seed, gorpMigrationOne, gorpMigrationDBTypes, false, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	postOne := &Post{}
+	postTwo := &Post{}
+	if err = randomize.Struct(seed, postOne, postDBTypes, false, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
-	if err = randomize.Struct(seed, gorpMigrationTwo, gorpMigrationDBTypes, false, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	if err = randomize.Struct(seed, postTwo, postDBTypes, false, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = gorpMigrationOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = postOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = gorpMigrationTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = postTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -299,14 +299,14 @@ func testGorpMigrationsCount(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsInsert(t *testing.T) {
+func testPostsInsert(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -316,7 +316,7 @@ func testGorpMigrationsInsert(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -326,24 +326,24 @@ func testGorpMigrationsInsert(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsInsertWhitelist(t *testing.T) {
+func testPostsInsertWhitelist(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = o.Insert(ctx, tx, boil.Whitelist(gorpMigrationColumnsWithoutDefault...)); err != nil {
+	if err = o.Insert(ctx, tx, boil.Whitelist(postColumnsWithoutDefault...)); err != nil {
 		t.Error(err)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -353,14 +353,14 @@ func testGorpMigrationsInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsReload(t *testing.T) {
+func testPostsReload(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -375,14 +375,14 @@ func testGorpMigrationsReload(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsReloadAll(t *testing.T) {
+func testPostsReloadAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -392,21 +392,21 @@ func testGorpMigrationsReloadAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := GorpMigrationSlice{o}
+	slice := PostSlice{o}
 
 	if err = slice.ReloadAll(ctx, tx); err != nil {
 		t.Error(err)
 	}
 }
 
-func testGorpMigrationsSelect(t *testing.T) {
+func testPostsSelect(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -416,7 +416,7 @@ func testGorpMigrationsSelect(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice, err := GorpMigrations().All(ctx, tx)
+	slice, err := Posts().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -427,25 +427,25 @@ func testGorpMigrationsSelect(t *testing.T) {
 }
 
 var (
-	gorpMigrationDBTypes = map[string]string{`ID`: `varchar`, `AppliedAt`: `datetime`}
-	_                    = bytes.MinRead
+	postDBTypes = map[string]string{`ID`: `int`, `AuthorID`: `int`, `Title`: `varchar`, `Body`: `varchar`, `CreatedAt`: `timestamp`, `UpdatedAt`: `timestamp`, `DeletedAt`: `timestamp`}
+	_           = bytes.MinRead
 )
 
-func testGorpMigrationsUpdate(t *testing.T) {
+func testPostsUpdate(t *testing.T) {
 	t.Parallel()
 
-	if 0 == len(gorpMigrationPrimaryKeyColumns) {
+	if 0 == len(postPrimaryKeyColumns) {
 		t.Skip("Skipping table with no primary key columns")
 	}
-	if len(gorpMigrationAllColumns) == len(gorpMigrationPrimaryKeyColumns) {
+	if len(postAllColumns) == len(postPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -455,7 +455,7 @@ func testGorpMigrationsUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -464,8 +464,8 @@ func testGorpMigrationsUpdate(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	if err = randomize.Struct(seed, o, postDBTypes, true, postPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	if rowsAff, err := o.Update(ctx, tx, boil.Infer()); err != nil {
@@ -475,18 +475,18 @@ func testGorpMigrationsUpdate(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsSliceUpdateAll(t *testing.T) {
+func testPostsSliceUpdateAll(t *testing.T) {
 	t.Parallel()
 
-	if len(gorpMigrationAllColumns) == len(gorpMigrationPrimaryKeyColumns) {
+	if len(postAllColumns) == len(postPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &GorpMigration{}
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := &Post{}
+	if err = randomize.Struct(seed, o, postDBTypes, true, postColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -496,7 +496,7 @@ func testGorpMigrationsSliceUpdateAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -505,18 +505,18 @@ func testGorpMigrationsSliceUpdateAll(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, gorpMigrationDBTypes, true, gorpMigrationPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	if err = randomize.Struct(seed, o, postDBTypes, true, postPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	// Remove Primary keys and unique columns from what we plan to update
 	var fields []string
-	if strmangle.StringSliceMatch(gorpMigrationAllColumns, gorpMigrationPrimaryKeyColumns) {
-		fields = gorpMigrationAllColumns
+	if strmangle.StringSliceMatch(postAllColumns, postPrimaryKeyColumns) {
+		fields = postAllColumns
 	} else {
 		fields = strmangle.SetComplement(
-			gorpMigrationAllColumns,
-			gorpMigrationPrimaryKeyColumns,
+			postAllColumns,
+			postPrimaryKeyColumns,
 		)
 	}
 
@@ -534,7 +534,7 @@ func testGorpMigrationsSliceUpdateAll(t *testing.T) {
 		}
 	}
 
-	slice := GorpMigrationSlice{o}
+	slice := PostSlice{o}
 	if rowsAff, err := slice.UpdateAll(ctx, tx, updateMap); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
@@ -542,32 +542,32 @@ func testGorpMigrationsSliceUpdateAll(t *testing.T) {
 	}
 }
 
-func testGorpMigrationsUpsert(t *testing.T) {
+func testPostsUpsert(t *testing.T) {
 	t.Parallel()
 
-	if len(gorpMigrationAllColumns) == len(gorpMigrationPrimaryKeyColumns) {
+	if len(postAllColumns) == len(postPrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
-	if len(mySQLGorpMigrationUniqueColumns) == 0 {
+	if len(mySQLPostUniqueColumns) == 0 {
 		t.Skip("Skipping table with no unique columns to conflict on")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
 	// Attempt the INSERT side of an UPSERT
-	o := GorpMigration{}
-	if err = randomize.Struct(seed, &o, gorpMigrationDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	o := Post{}
+	if err = randomize.Struct(seed, &o, postDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 	if err = o.Upsert(ctx, tx, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert GorpMigration: %s", err)
+		t.Errorf("Unable to upsert Post: %s", err)
 	}
 
-	count, err := GorpMigrations().Count(ctx, tx)
+	count, err := Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -576,15 +576,15 @@ func testGorpMigrationsUpsert(t *testing.T) {
 	}
 
 	// Attempt the UPDATE side of an UPSERT
-	if err = randomize.Struct(seed, &o, gorpMigrationDBTypes, false, gorpMigrationPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize GorpMigration struct: %s", err)
+	if err = randomize.Struct(seed, &o, postDBTypes, false, postPrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Post struct: %s", err)
 	}
 
 	if err = o.Upsert(ctx, tx, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert GorpMigration: %s", err)
+		t.Errorf("Unable to upsert Post: %s", err)
 	}
 
-	count, err = GorpMigrations().Count(ctx, tx)
+	count, err = Posts().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
