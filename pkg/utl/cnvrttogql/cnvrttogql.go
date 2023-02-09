@@ -71,18 +71,18 @@ func RoleToGraphqlRole(r *models.Role, count int) *graphql.Role {
 	}
 }
 
-//PostToGraphqlPost converts a post model to a graphql post model
+// PostToGraphqlPost converts a post model to a graphql post model
 func PostToGraphqlPost(post *models.Post) *graphql.Post {
 	if post == nil {
 		return nil
 	}
-	postID:= strconv.Itoa(post.ID)
-	authorID:=strconv.Itoa(convert.NullDotIntToInt(post.AuthorID))
+	postID := strconv.Itoa(post.ID)
+	authorID := strconv.Itoa(convert.NullDotIntToInt(post.AuthorID))
 	return &graphql.Post{
-		ID: postID,
-		AuthorID: authorID,
-		Body: &post.Body,
-		Title: post.Title,
+		ID:        postID,
+		AuthorID:  authorID,
+		Body:      &post.Body,
+		Title:     post.Title,
 		CreatedAt: convert.NullDotTimeToPointerInt(post.CreatedAt),
 		UpdatedAt: convert.NullDotTimeToPointerInt(post.UpdatedAt),
 		DeletedAt: convert.NullDotTimeToPointerInt(post.DeletedAt),
@@ -98,16 +98,16 @@ func PostsToGraphQlPosts(u models.PostSlice) []*graphql.Post {
 	return r
 }
 
-//AuthorToGraphqlAuthor converts a auhtor model to a graphql author model
+// AuthorToGraphqlAuthor converts a auhtor model to a graphql author model
 func AuthorToGraphqlAuthor(author *models.Author) *graphql.Author {
 	if author == nil {
 		return nil
 	}
-	postID:= strconv.Itoa(author.ID)
+	postID := strconv.Itoa(author.ID)
 	return &graphql.Author{
-		ID: postID,
+		ID:        postID,
 		FirstName: author.FirstName,
-		LastName: author.LastName,
+		LastName:  author.LastName,
 		CreatedAt: convert.NullDotTimeToPointerInt(author.CreatedAt),
 		UpdatedAt: convert.NullDotTimeToPointerInt(author.UpdatedAt),
 		DeletedAt: convert.NullDotTimeToPointerInt(author.DeletedAt),

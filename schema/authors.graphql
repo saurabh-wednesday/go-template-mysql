@@ -1,0 +1,30 @@
+type Author {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    createdAt: Int
+    deletedAt: Int
+    updatedAt: Int
+}
+
+input AuthorCreateInput {
+    firstName: String!
+    lastName: String!
+}
+
+input AuthorUpdateInput {
+    id: ID!
+    firstName: String
+    lastName: String
+}
+
+input AuthorDeleteInput {
+    id: ID!
+}
+type AuthorDeleteResponse {
+    rowsAffected: Int!
+}
+
+type AuthorPayload {
+    authors: [Author!]! 
+}

@@ -21,8 +21,8 @@ func StringToInt(v string) int {
 }
 
 func IntToPointerInt(i int) *int {
- pointerInt  := &i
- return pointerInt
+	pointerInt := &i
+	return pointerInt
 }
 
 // StringToBool converts string to boolean
@@ -72,7 +72,8 @@ func PointerStringToNullDotInt(s *string) null.Int {
 	}
 	return null.IntFrom(i)
 }
-//NullDotTimeToPointerInt converts null.Time to an int pointer
+
+// NullDotTimeToPointerInt converts null.Time to an int pointer
 func NullDotTimeToPointerInt(t null.Time) *int {
 	var i int
 	if t.Valid {
