@@ -20,6 +20,11 @@ func StringToInt(v string) int {
 	return i
 }
 
+func IntToPointerInt(i int) *int {
+ pointerInt  := &i
+ return pointerInt
+}
+
 // StringToBool converts string to boolean
 func StringToBool(v string) bool {
 	i, err := strconv.ParseBool(v)
