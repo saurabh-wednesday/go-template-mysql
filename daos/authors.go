@@ -10,11 +10,11 @@ import (
 
 // CreateAuthor creates a new Author based on the input provided to the Author model
 func CreateAuthor(Author models.Author, ctx context.Context) (models.Author, error) {
-	return createAuthorTx(Author, ctx, nil)
+	return CreateAuthorTx(Author, ctx, nil)
 }
 
 // createAuthorTx holds a transcation happening within the db to create a Author
-func createAuthorTx(Author models.Author, ctx context.Context, tx *sql.Tx) (models.Author, error) {
+func CreateAuthorTx(Author models.Author, ctx context.Context, tx *sql.Tx) (models.Author, error) {
 	contextExecutor := getContextExecutor(tx)
 	err := Author.Insert(ctx, contextExecutor, boil.Infer())
 	return Author, err
@@ -22,13 +22,12 @@ func createAuthorTx(Author models.Author, ctx context.Context, tx *sql.Tx) (mode
 
 // UpdateAuthor updates a given Author values
 func UpdateAuthor(Author *models.Author, ctx context.Context) (models.Author, error) {
-	return updateAuthorTx(Author, ctx, nil)
+	return UpdateAuthorTx(Author, ctx, nil)
 }
 
 // updateAuthorTx creates a transaction for the updation of Author
-func updateAuthorTx(Author *models.Author, ctx context.Context, tx *sql.Tx) (models.Author, error) {
+func UpdateAuthorTx(Author *models.Author, ctx context.Context, tx *sql.Tx) (models.Author, error) {
 	contextExecutor := getContextExecutor(tx)
-
 	_, err := Author.Update(ctx, contextExecutor, boil.Infer())
 	return *Author, err
 }

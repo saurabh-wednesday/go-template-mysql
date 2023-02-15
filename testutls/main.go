@@ -53,6 +53,50 @@ func MockUser() *models.User {
 		RoleID:             null.IntFrom(1),
 	}
 }
+
+func MockAuthor() *models.Author {
+	return &models.Author{
+		ID:        MockID,
+		FirstName: "First",
+		LastName:  "Last",
+		CreatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		UpdatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		DeletedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+	}
+}
+
+func MockAuthors() []*models.Author {
+
+	return []*models.Author{
+		{
+		ID:        MockID,
+		FirstName: "first",
+		LastName:  "last",
+		CreatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		UpdatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		DeletedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+	},
+}
+}
+
 func MockUsers() []*models.User {
 	return []*models.User{
 		{
