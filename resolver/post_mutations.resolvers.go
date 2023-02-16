@@ -22,7 +22,7 @@ func (r *mutationResolver) CreatePost(ctx context.Context, input gqlmodels.PostC
 		return nil, err
 	}
 	var post models.Post
-	author, err := daos.FindUserByID(authorId, ctx)
+	author, err := daos.FetchAuthorByID(authorId, ctx)
 	if author != nil && input.Body != "" && input.Title != "" {
 		post = models.Post{
 			AuthorID: null.NewInt(authorId, true),

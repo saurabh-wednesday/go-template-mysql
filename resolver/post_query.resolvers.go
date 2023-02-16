@@ -23,8 +23,3 @@ func (r *queryResolver) GetPosts(ctx context.Context) (*gqlmodels.PostPayload, e
 		Posts: gqlPosts,
 	}, nil
 }
-
-// Query returns gqlmodels.QueryResolver implementation.
-func (r *Resolver) Query() gqlmodels.QueryResolver { return &queryResolver{r} }
-
-type queryResolver struct{ *Resolver }

@@ -12,6 +12,7 @@ import "testing"
 // It does NOT run each operation group in parallel.
 // Separating the tests thusly grants avoidance of Postgres deadlocks.
 func TestParent(t *testing.T) {
+	t.Run("Authors", testAuthors)
 	t.Run("GorpMigrations", testGorpMigrations)
 	t.Run("Posts", testPosts)
 	t.Run("Roles", testRoles)
@@ -20,6 +21,7 @@ func TestParent(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
+	t.Run("Authors", testAuthorsDelete)
 	t.Run("GorpMigrations", testGorpMigrationsDelete)
 	t.Run("Posts", testPostsDelete)
 	t.Run("Roles", testRolesDelete)
@@ -28,6 +30,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestQueryDeleteAll(t *testing.T) {
+	t.Run("Authors", testAuthorsQueryDeleteAll)
 	t.Run("GorpMigrations", testGorpMigrationsQueryDeleteAll)
 	t.Run("Posts", testPostsQueryDeleteAll)
 	t.Run("Roles", testRolesQueryDeleteAll)
@@ -36,6 +39,7 @@ func TestQueryDeleteAll(t *testing.T) {
 }
 
 func TestSliceDeleteAll(t *testing.T) {
+	t.Run("Authors", testAuthorsSliceDeleteAll)
 	t.Run("GorpMigrations", testGorpMigrationsSliceDeleteAll)
 	t.Run("Posts", testPostsSliceDeleteAll)
 	t.Run("Roles", testRolesSliceDeleteAll)
@@ -44,6 +48,7 @@ func TestSliceDeleteAll(t *testing.T) {
 }
 
 func TestExists(t *testing.T) {
+	t.Run("Authors", testAuthorsExists)
 	t.Run("GorpMigrations", testGorpMigrationsExists)
 	t.Run("Posts", testPostsExists)
 	t.Run("Roles", testRolesExists)
@@ -52,6 +57,7 @@ func TestExists(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
+	t.Run("Authors", testAuthorsFind)
 	t.Run("GorpMigrations", testGorpMigrationsFind)
 	t.Run("Posts", testPostsFind)
 	t.Run("Roles", testRolesFind)
@@ -60,6 +66,7 @@ func TestFind(t *testing.T) {
 }
 
 func TestBind(t *testing.T) {
+	t.Run("Authors", testAuthorsBind)
 	t.Run("GorpMigrations", testGorpMigrationsBind)
 	t.Run("Posts", testPostsBind)
 	t.Run("Roles", testRolesBind)
@@ -68,6 +75,7 @@ func TestBind(t *testing.T) {
 }
 
 func TestOne(t *testing.T) {
+	t.Run("Authors", testAuthorsOne)
 	t.Run("GorpMigrations", testGorpMigrationsOne)
 	t.Run("Posts", testPostsOne)
 	t.Run("Roles", testRolesOne)
@@ -76,6 +84,7 @@ func TestOne(t *testing.T) {
 }
 
 func TestAll(t *testing.T) {
+	t.Run("Authors", testAuthorsAll)
 	t.Run("GorpMigrations", testGorpMigrationsAll)
 	t.Run("Posts", testPostsAll)
 	t.Run("Roles", testRolesAll)
@@ -84,6 +93,7 @@ func TestAll(t *testing.T) {
 }
 
 func TestCount(t *testing.T) {
+	t.Run("Authors", testAuthorsCount)
 	t.Run("GorpMigrations", testGorpMigrationsCount)
 	t.Run("Posts", testPostsCount)
 	t.Run("Roles", testRolesCount)
@@ -92,6 +102,8 @@ func TestCount(t *testing.T) {
 }
 
 func TestInsert(t *testing.T) {
+	t.Run("Authors", testAuthorsInsert)
+	t.Run("Authors", testAuthorsInsertWhitelist)
 	t.Run("GorpMigrations", testGorpMigrationsInsert)
 	t.Run("GorpMigrations", testGorpMigrationsInsertWhitelist)
 	t.Run("Posts", testPostsInsert)
@@ -166,6 +178,7 @@ func TestToManyRemove(t *testing.T) {
 }
 
 func TestReload(t *testing.T) {
+	t.Run("Authors", testAuthorsReload)
 	t.Run("GorpMigrations", testGorpMigrationsReload)
 	t.Run("Posts", testPostsReload)
 	t.Run("Roles", testRolesReload)
@@ -174,6 +187,7 @@ func TestReload(t *testing.T) {
 }
 
 func TestReloadAll(t *testing.T) {
+	t.Run("Authors", testAuthorsReloadAll)
 	t.Run("GorpMigrations", testGorpMigrationsReloadAll)
 	t.Run("Posts", testPostsReloadAll)
 	t.Run("Roles", testRolesReloadAll)
@@ -182,6 +196,7 @@ func TestReloadAll(t *testing.T) {
 }
 
 func TestSelect(t *testing.T) {
+	t.Run("Authors", testAuthorsSelect)
 	t.Run("GorpMigrations", testGorpMigrationsSelect)
 	t.Run("Posts", testPostsSelect)
 	t.Run("Roles", testRolesSelect)
@@ -190,6 +205,7 @@ func TestSelect(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
+	t.Run("Authors", testAuthorsUpdate)
 	t.Run("GorpMigrations", testGorpMigrationsUpdate)
 	t.Run("Posts", testPostsUpdate)
 	t.Run("Roles", testRolesUpdate)
@@ -198,6 +214,7 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestSliceUpdateAll(t *testing.T) {
+	t.Run("Authors", testAuthorsSliceUpdateAll)
 	t.Run("GorpMigrations", testGorpMigrationsSliceUpdateAll)
 	t.Run("Posts", testPostsSliceUpdateAll)
 	t.Run("Roles", testRolesSliceUpdateAll)

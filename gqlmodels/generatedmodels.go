@@ -2,6 +2,38 @@
 
 package gqlmodels
 
+type Author struct {
+	ID        string `json:"id"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	CreatedAt *int   `json:"createdAt"`
+	DeletedAt *int   `json:"deletedAt"`
+	UpdatedAt *int   `json:"updatedAt"`
+}
+
+type AuthorCreateInput struct {
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+}
+
+type AuthorDeleteInput struct {
+	ID string `json:"id"`
+}
+
+type AuthorDeleteResponse struct {
+	RowsAffected int `json:"rowsAffected"`
+}
+
+type AuthorPayload struct {
+	Authors []*Author `json:"authors"`
+}
+
+type AuthorUpdateInput struct {
+	ID        string  `json:"id"`
+	FirstName *string `json:"firstName"`
+	LastName  *string `json:"lastName"`
+}
+
 type BooleanFilter struct {
 	IsTrue  *bool `json:"isTrue"`
 	IsFalse *bool `json:"isFalse"`
