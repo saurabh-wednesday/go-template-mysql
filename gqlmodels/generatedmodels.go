@@ -46,6 +46,34 @@ type LoginResponse struct {
 	RefreshToken string `json:"refreshToken"`
 }
 
+type Post struct {
+	ID        string  `json:"id"`
+	AuthorID  string  `json:"authorID"`
+	Title     string  `json:"title"`
+	Body      *string `json:"body"`
+	CreatedAt *int    `json:"createdAt"`
+	UpdatedAt *int    `json:"updatedAt"`
+	DeletedAt *int    `json:"deletedAt"`
+}
+
+type PostCreateInput struct {
+	Title string `json:"title"`
+	Body  string `json:"body"`
+}
+
+type PostDeleteInput struct {
+	ID string `json:"id"`
+}
+
+type PostDeleteResponse struct {
+	ID string `json:"id"`
+}
+
+type PostUpdateInput struct {
+	Title *string `json:"title"`
+	Body  *string `json:"body"`
+}
+
 type RefreshTokenResponse struct {
 	Token string `json:"token"`
 }

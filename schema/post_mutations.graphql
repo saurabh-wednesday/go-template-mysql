@@ -1,0 +1,5 @@
+type Mutation {
+    createPost(input: PostCreateInput!): Post!
+    updatePost(input: PostUpdateInput!): Post!
+    deletePost(input: PostDeleteInput!): PostDeleteResponse!
+}
