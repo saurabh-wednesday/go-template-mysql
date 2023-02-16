@@ -12,9 +12,11 @@ type Post {
 input PostCreateInput {
     title: String!
     body: String!
+    authorID: ID!
 }
 
 input PostUpdateInput {
+    id: ID!
     title: String
     body: String
 }
@@ -23,5 +25,9 @@ input PostDeleteInput {
     id: ID!
 }
 type PostDeleteResponse {
-    id: ID!
+    rowsAffected: Int!
+}
+
+type PostPayload {
+    posts: [Post!]! 
 }

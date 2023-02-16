@@ -24,8 +24,3 @@ func (r *mutationResolver) UpdatePost(ctx context.Context, input gqlmodels.PostU
 func (r *mutationResolver) DeletePost(ctx context.Context, input gqlmodels.PostDeleteInput) (*gqlmodels.PostDeleteResponse, error) {
 	panic(fmt.Errorf("not implemented: DeletePost - deletePost"))
 }
-
-// Mutation returns gqlmodels.MutationResolver implementation.
-func (r *Resolver) Mutation() gqlmodels.MutationResolver { return &mutationResolver{r} }
-
-type mutationResolver struct{ *Resolver }

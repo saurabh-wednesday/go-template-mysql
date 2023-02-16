@@ -11,8 +11,7 @@ import (
 
 // GetPosts is the resolver for the getPosts field.
 func (r *queryResolver) GetPosts(ctx context.Context) ([]*gqlmodels.UsersPayload, error) {
- return nil,nil
-
+	return nil, nil
 }
 
 // Query returns gqlmodels.QueryResolver implementation.
