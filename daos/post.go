@@ -68,7 +68,7 @@ func FetchPostByID(ID int, ctx context.Context) (*models.Post, error) {
 }
 
 // FetchPostByID returns the post associated with the id
-func FetchPostByauthorID(ID int, ctx context.Context) (*models.PostSlice, error) {
+func FetchPostByAuthorID(ID int, ctx context.Context) (*models.PostSlice, error) {
 	contextExecutor := getContextExecutor(nil)
 	posts, err := models.Posts(models.PostWhere.ID.EQ(ID)).All(ctx, contextExecutor)
 	if err != nil {
