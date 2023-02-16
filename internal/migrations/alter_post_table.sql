@@ -11,4 +11,4 @@ CREATE TABLE post (
 			deleted_at TIMESTAMP
 		);
 -- +migrate Down
-DROP TABLE post;  
+DROP TABLE post; 

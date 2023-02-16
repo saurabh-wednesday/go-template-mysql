@@ -57,8 +57,9 @@ type Post struct {
 }
 
 type PostCreateInput struct {
-	Title string `json:"title"`
-	Body  string `json:"body"`
+	Title    string `json:"title"`
+	Body     string `json:"body"`
+	AuthorID string `json:"authorID"`
 }
 
 type PostDeleteInput struct {
@@ -66,10 +67,15 @@ type PostDeleteInput struct {
 }
 
 type PostDeleteResponse struct {
-	ID string `json:"id"`
+	RowsAffected int `json:"rowsAffected"`
+}
+
+type PostPayload struct {
+	Posts []*Post `json:"posts"`
 }
 
 type PostUpdateInput struct {
+	ID    string  `json:"id"`
 	Title *string `json:"title"`
 	Body  *string `json:"body"`
 }
