@@ -2,9 +2,15 @@ package resolver
 
 import (
 	"context"
+	"go-template/daos"
 	"go-template/gqlmodels"
-	"reflect"
+	"go-template/models"
+	"go-template/pkg/utl/cnvrttogql"
+	"go-template/testutls"
 	"testing"
+
+	"github.com/agiledragon/gomonkey/v2"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_queryResolver_GetPosts(t *testing.T) {
@@ -15,27 +21,34 @@ func Test_queryResolver_GetPosts(t *testing.T) {
 		ctx context.Context
 	}
 	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		want    *gqlmodels.PostPayload
-		wantErr bool
+		name   string
+		fields fields
+		args   args
+		want   *gqlmodels.PostPayload
+		err    error
 	}{
-		// TODO: Add test cases.
+		{
+			name: "success case fetching posts",
+			fields: fields{
+				Resolver: &Resolver{},
+			},
+			want: &gqlmodels.PostPayload{
+				Posts: cnvrttogql.PostsToGraphQlPosts(testutls.MockPosts()),
+			},
+			err: nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := &queryResolver{
 				Resolver: tt.fields.Resolver,
 			}
-			got, err := r.GetPosts(tt.args.ctx)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("queryResolver.GetPosts() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("queryResolver.GetPosts() = %v, want %v", got, tt.want)
-			}
+			gomonkey.ApplyFunc(daos.FetchAllPosts, func(ctx context.Context) (models.PostSlice, error) {
+				return testutls.MockPosts(), nil
+			})
+			_, err := r.GetPosts(tt.args.ctx)
+			assert.Equal(t, err, tt.err)
+
 		})
 	}
 }

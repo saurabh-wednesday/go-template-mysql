@@ -58,6 +58,6 @@ func FetchAllAuthors(ctx context.Context) (models.AuthorSlice, error) {
 
 // FetchAuthorByID returns the Author associated with the id
 func FetchAuthorByID(ID int, ctx context.Context) (*models.Author, error) {
-	contextExecutor := getContextExecutor(&sql.Tx{})
+	contextExecutor := getContextExecutor(nil)
 	return models.FindAuthor(ctx, contextExecutor, ID)
 }

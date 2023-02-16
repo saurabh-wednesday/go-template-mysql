@@ -28,8 +28,8 @@ func UpdatePost(post *models.Post, ctx context.Context) (models.Post, error) {
 
 // UpdatePostTx creates a transaction for the updation of post
 func UpdatePostTx(post *models.Post, ctx context.Context, tx *sql.Tx) (models.Post, error) {
-
-	_, err := post.Update(ctx, boil.GetContextDB(), boil.Infer())
+	contextExecutor := getContextExecutor(tx)
+	_, err := post.Update(ctx, contextExecutor, boil.Infer())
 	return *post, err
 }
 
