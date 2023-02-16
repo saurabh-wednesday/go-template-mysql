@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/volatiletech/null/v8"
@@ -53,6 +54,16 @@ func NullDotIntToInt(v null.Int) int {
 		return 0
 	}
 	return *v.Ptr()
+}
+
+// NullDotIntToString converts nullable int to string
+func NullDotIntToString(v null.Int) string {
+	if v.Ptr() == nil {
+		return ""
+	}
+	fmt.Println("converting null.Int to String", strconv.Itoa(v.Int))
+	return strconv.Itoa(v.Int)
+
 }
 
 // NullDotBoolToPointerBool converts nullable boolean to its pointer value

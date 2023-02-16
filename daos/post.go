@@ -11,11 +11,11 @@ import (
 
 // CreatePost creates a new post based on the input provided to the post model
 func CreatePost(post models.Post, ctx context.Context) (models.Post, error) {
-	return createPostTx(post, ctx, nil)
+	return CreatePostTx(post, ctx, nil)
 }
 
-// createPostTx holds a transcation happening within the db to create a post
-func createPostTx(post models.Post, ctx context.Context, tx *sql.Tx) (models.Post, error) {
+// CreatePostTx holds a transcation happening within the db to create a post
+func CreatePostTx(post models.Post, ctx context.Context, tx *sql.Tx) (models.Post, error) {
 	contextExecutor := getContextExecutor(tx)
 	err := post.Insert(ctx, contextExecutor, boil.Infer())
 	return post, err
@@ -23,13 +23,12 @@ func createPostTx(post models.Post, ctx context.Context, tx *sql.Tx) (models.Pos
 
 // UpdatePost updates a given post values
 func UpdatePost(post *models.Post, ctx context.Context) (models.Post, error) {
-	return updatePostTx(post, ctx, nil)
+	return UpdatePostTx(post, ctx, nil)
 }
 
-// updatePostTx creates a transaction for the updation of post
-func updatePostTx(post *models.Post, ctx context.Context, tx *sql.Tx) (models.Post, error) {
+// UpdatePostTx creates a transaction for the updation of post
+func UpdatePostTx(post *models.Post, ctx context.Context, tx *sql.Tx) (models.Post, error) {
 	contextExecutor := getContextExecutor(tx)
-
 	_, err := post.Update(ctx, contextExecutor, boil.Infer())
 	return *post, err
 }
