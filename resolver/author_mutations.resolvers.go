@@ -22,9 +22,9 @@ func (r *mutationResolver) CreateAuthor(ctx context.Context, input gqlmodels.Aut
 			FirstName: input.FirstName,
 			LastName:  input.LastName,
 		}
-		author, err := daos.CreateAuthor(author, ctx)
-		graphPost := cnvrttogql.AuthorToGraphqlAuthor(&author)
-		return graphPost, err
+		newAuthor, err := daos.CreateAuthor(author, ctx)
+		graphAuthor := cnvrttogql.AuthorToGraphqlAuthor(&newAuthor)
+		return graphAuthor, err
 	}
 	return nil, errors.New("invalid input")
 }
