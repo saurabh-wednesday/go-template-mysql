@@ -111,6 +111,56 @@ func MockUsers() []*models.User {
 
 }
 
+func MockPost() *models.Post {
+	return &models.Post{
+		ID: 0,
+		AuthorID: null.Int{
+			Int:   0,
+			Valid: false,
+		},
+		Title: "title",
+		Body:  "body",
+		CreatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		UpdatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		DeletedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+	}
+}
+
+func MockPosts() []*models.Post{
+	return []*models.Post {
+		{
+			ID: 0,
+		AuthorID: null.Int{
+			Int:   0,
+			Valid: false,
+		},
+		Title: "title",
+		Body:  "body",
+		CreatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		UpdatedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		DeletedAt: null.Time{
+			Time:  time.Time{},
+			Valid: false,
+		},
+		},
+	}
+}
+
 func MockJwt(role string) *jwt.Token {
 	return &jwt.Token{
 		Raw: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIi" +
