@@ -70,3 +70,29 @@ func RoleToGraphqlRole(r *models.Role, count int) *graphql.Role {
 		Users:       UsersToGraphQlUsers(users, count),
 	}
 }
+
+func PostToGraphqlPost(post *models.Post) *graphql.Post {
+	if post == nil {
+		return nil
+	}
+	postID:= strconv.Itoa(post.ID)
+	authorID:=strconv.Itoa(convert.NullDotIntToInt(post.AuthorID))
+	return &graphql.Post{
+		ID: postID,
+		AuthorID: authorID,
+		Body: &post.Body,
+		Title: post.Title,
+		CreatedAt: convert.NullDotTimeToPointerInt(post.CreatedAt),
+		UpdatedAt: convert.NullDotTimeToPointerInt(post.UpdatedAt),
+		DeletedAt: convert.NullDotTimeToPointerInt(post.DeletedAt),
+	}
+}
+
+// PostsToGraphQlPosts converts array of type models.Post into array of pointer type graphql.Post
+func PostsToGraphQlPosts(u models.PostSlice) []*graphql.Post {
+	var r []*graphql.Post
+	for _, e := range u {
+		r = append(r, PostToGraphqlPost(e))
+	}
+	return r
+}

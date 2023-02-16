@@ -6,21 +6,75 @@ package resolver
 
 import (
 	"context"
-	"fmt"
+	"go-template/daos"
 	"go-template/gqlmodels"
+	"go-template/models"
+	"go-template/pkg/utl/cnvrttogql"
+	"strconv"
+
+	null "github.com/volatiletech/null/v8"
 )
 
 // CreatePost is the resolver for the createPost field.
 func (r *mutationResolver) CreatePost(ctx context.Context, input gqlmodels.PostCreateInput) (*gqlmodels.Post, error) {
-	panic(fmt.Errorf("not implemented: CreatePost - createPost"))
+	authorId, err := strconv.Atoi(input.AuthorID)
+	if err != nil {
+		return nil, err
+	}
+	var post models.Post
+	author, err := daos.FindUserByID(authorId, ctx)
+	if author != nil && input.Body != "" && input.Title != "" {
+		post = models.Post{
+			AuthorID: null.NewInt(authorId, true),
+			Title:    input.Title,
+			Body:     input.Body,
+		}
+		post, err = daos.CreatePost(post, ctx)
+		graphPost := cnvrttogql.PostToGraphqlPost(&post)
+		return graphPost, err
+	}
+	return nil, err
 }
 
 // UpdatePost is the resolver for the updatePost field.
 func (r *mutationResolver) UpdatePost(ctx context.Context, input gqlmodels.PostUpdateInput) (*gqlmodels.Post, error) {
-	panic(fmt.Errorf("not implemented: UpdatePost - updatePost"))
+	var updatedPost models.Post
+	postID, err := strconv.Atoi(input.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	post, err := daos.FetchPostByID(postID, ctx)
+	if post != nil {
+		if input.Body != nil {
+			post.Body = *input.Body
+
+		}
+		if input.Title != nil {
+			post.Title = *input.Title
+		}
+		updatedPost, err = daos.UpdatePost(post, ctx)
+		if err != nil {
+			return nil, err
+		}
+	}
+	graphPost := cnvrttogql.PostToGraphqlPost(&updatedPost)
+	return graphPost, nil
 }
 
 // DeletePost is the resolver for the deletePost field.
 func (r *mutationResolver) DeletePost(ctx context.Context, input gqlmodels.PostDeleteInput) (*gqlmodels.PostDeleteResponse, error) {
-	panic(fmt.Errorf("not implemented: DeletePost - deletePost"))
+	postID, err := strconv.Atoi(input.ID)
+	if err != nil {
+		return nil, err
+	}
+	post, err := daos.FetchPostByID(postID, ctx)
+	rowsAffected, err := daos.DeletePost(*post, ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &gqlmodels.PostDeleteResponse{
+		RowsAffected: rowsAffected,
+	}, nil
 }

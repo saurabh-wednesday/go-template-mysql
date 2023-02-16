@@ -6,12 +6,22 @@ package resolver
 
 import (
 	"context"
+	"go-template/daos"
 	"go-template/gqlmodels"
+	"go-template/pkg/utl/cnvrttogql"
 )
 
 // GetPosts is the resolver for the getPosts field.
-func (r *queryResolver) GetPosts(ctx context.Context) ([]*gqlmodels.UsersPayload, error) {
-	return nil, nil
+func (r *queryResolver) GetPosts(ctx context.Context) (*gqlmodels.PostPayload, error) {
+	posts, err := daos.FetchAllPosts(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	gqlPosts := cnvrttogql.PostsToGraphQlPosts(posts)
+	return &gqlmodels.PostPayload{
+		Posts: gqlPosts,
+	}, nil
 }
 
 // Query returns gqlmodels.QueryResolver implementation.
